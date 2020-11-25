@@ -17,14 +17,16 @@ export class ReferenceController implements IHttpRoute {
 
   register(router: HttpRouter): void {
     router.route('/v1/references')
-      .get(
+      .post(
         this.createReference.bind(this),
       )
   }
 
   async createReference(req: HttpRequest, res: HttpResponse, next: HttpNext) {
     try {
-      const result = await this.referenceUseCase.createReference({} as Reference);
+      const reference = req.body;
+
+      const result = await this.referenceUseCase.createReference(reference as Reference);
 
       res.status(200).send(result);
     } catch (error) {

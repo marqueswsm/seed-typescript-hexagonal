@@ -1,3 +1,6 @@
+import * as Uuid from 'uuid-converter';
+import * as R from 'ramda';
+
 import { IReferenceRepository, Reference } from '../../types/reference';
 import {
   IMysqlAdapter,
@@ -12,9 +15,15 @@ export class ReferenceRepository implements IReferenceRepository {
 
   constructor(context: Context) {
     this.mysqlAdapter = context.mysqlAdapter;
+    this.mysqlAdapter.tableName = 'references';
   }
   
-  createReference(params: Reference): Promise<string> {
-    return Promise.resolve('Mutual <3');
+  async createReference(params: Reference): Promise<string> {
+    const id = Uuid.generate();
+
+    const reference = R.assoc('id', id, params);
+    await this.mysqlAdapter.db.insert(reference);
+
+    return id;
   }
 }
