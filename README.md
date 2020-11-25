@@ -3,6 +3,6 @@ It is a template to create APIs using typescript and hexagonal architecture. If 
 
 ### To do
 
-- [ ] Fix eslint
+- [x] Fix eslint
 - [ ] Add integration tests
 - [ ] Create docker file
