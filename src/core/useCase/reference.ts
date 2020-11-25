@@ -8,7 +8,7 @@ export class ReferenceUseCase implements IReferenceUseCase {
     this.referenceService = ctx.referenceService;
   }
 
-  createReference(params: Reference): Promise<Pick<Reference, 'id'>> {
+  createReference(params: Omit<Reference, 'id'>): Promise<Pick<Reference, 'id'>> {
     return this.referenceService.createReference(params);
   }
 }
