@@ -3,6 +3,8 @@ import * as helmet from 'helmet';
 import * as bodyParser from 'body-parser';
 
 import { ReferenceController } from './controller/reference';
+import { validator } from './middleware/validator';
+import { errorHandler } from './middleware/errorHandler';
 
 import { IHttpInterface, IHttpRoute } from '../../types/interface';
 import { Container } from '../../types/core';
@@ -34,12 +36,14 @@ export default class HttpInterface implements IHttpInterface {
     );
 
     this.setupRoutes();
+    this.app.use(errorHandler);
   }
 
   setupRoutes() {
     const controllers = [
       new ReferenceController({
         coreContainer: this.coreContainer,
+        validator,
       }),
     ];
 

@@ -25,6 +25,7 @@ rules:
   '@typescript-eslint/no-inferrable-types':
     - 'warn'
     - ignoreParameters: true
+  '@typescript-eslint/no-throw-literal': 'off'
 settings:
   import/resolver:
     node:

@@ -4,7 +4,7 @@ import { createCoreContainer } from '../core/container';
 import { createInfraContainer } from '../infrastructure/container';
 
 type ContainerConfig = {
-  env: typeof import('../util/env').env;
+  env: any;
   init: {
     http?: boolean;
   };

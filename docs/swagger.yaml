@@ -1,0 +1,241 @@
+openapi: "3.0.0"
+info:
+  title: References
+  description: Cadastro e manipulação de citações bibliográficas
+  version: '0.1.0'
+  license:
+    name: MIT
+  contact:
+    name: API Support
+    email: 'marques.wsm@gmail.com'
+
+
+servers:
+  - description: Desenvolvimento
+    url: https://api.dev.internal.wsm.com/
+  - description: Homologação
+    url: https://api.hlg.internal.wsm.com/
+  - description: Produção
+    url: https://api.internal.wsm.com/
+
+paths:
+  /v1/reference:
+    post:
+      summary: Criar uma referência 
+      tags:
+        - References
+      requestBody:
+        required: true
+        content: 
+          content/json:
+            schema:
+              $ref: '#/components/schemas/create'
+      responses:
+        '201':
+          description: Sucesso
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/createResponse'
+        '400':
+          description: Requisição inválida
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/error'
+        '500':
+          description: Erro Inesperado
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+  /v1/reference/{referenceId}:
+    get:
+      summary: Buscar uma referência
+      tags:
+        - References
+      parameters:
+        - $ref: '#/components/parameters/referenceId'
+      responses:
+        '200':
+          description: Dados da referência
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/getResponse'
+        '204':
+          description: Nenhum referência encontrada
+          content: Sem conteúdo
+        '500':
+          description: Erro Inesperado
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+    patch:
+      summary: Atualizar uma referência
+      tags:
+        - References
+      parameters:
+        - $ref: '#/components/parameters/referenceId'
+      requestBody:
+        required: true
+        content: 
+          content/json:
+            schema:
+              $ref: '#/components/schemas/update'
+      responses:
+        '200':
+          description: Dados da referência
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/createResponse'
+        '400':
+          description: Requisição inválida
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/error'
+        '422':
+          description: A requisição está correta, porém não foi possível processar as instruções
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    description: Código do erro
+                    type: string
+                    example: 'UNPROCESSABLE_ENTITY'
+                  message:
+                    description: Mensagem de erro
+                    type: string
+                    example: 'Reference not found'
+        '500':
+          description: Erro Inesperado
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+    delete:
+      summary: Deletar uma referência
+      tags:
+        - References
+      parameters:
+        - $ref: '#/components/parameters/referenceId'
+      responses:
+        '204':
+          description: Usuário deletado
+          content: Sem conteúdo
+        '400':
+          description: Requisição inválida
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/error'
+        '422':
+          description: A requisição está correta, porém não foi possível processar as instruções
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties:
+                  code:
+                    description: Código do erro
+                    type: string
+                    example: 'UNPROCESSABLE_ENTITY'
+                  message:
+                    description: Mensagem de erro
+                    type: string
+                    example: 'Reference not found'
+              responses:
+        '500':
+          description: Erro Inesperado
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/internalServerError'
+
+components: 
+  parameters: 
+    referenceId:
+      required: true
+      name: referenceId
+      in: path
+      description: Identificador da referência
+      schema:
+        type: string
+        format: uuid
+        example: 'e42aad74-8fbd-4ce3-8bdd-cb9052f0dadc'
+      
+  schemas:
+    reference: 
+      type: object
+      properties:
+        description:
+          description: Descrição da citação
+          type: string
+          example: 'Definição de cloud computing'
+        citation:
+          description: Texto a ser citado
+          type: string
+          example: 'Cloud computing is a model for enabling ubiquitous, convenient, on-demand network access to a shared pool of configurable computing resources (e.g., networks, servers, storage, applications, and services) that can be rapidly provisioned and released with minimal management effort or service provider interaction. This cloud model is composed of five essential characteristics, three service models, and four deployment models.'
+        bibtex:
+          description: Referência no formato Latex
+          type: string
+          example: '@article{mell2011nist,
+            title={The NIST definition of cloud computing},
+            author={Mell, Peter and Grance, Tim and others},
+            year={2011},
+            publisher={Computer Security Division, Information Technology Laboratory, National~…}
+          }'   
+
+    create:
+      required:
+        - citation
+        - bibtex
+      allOf:
+        - $ref: '#/components/schemas/reference'
+        
+
+    update:
+      anyOf:
+        - $ref: '#/components/schemas/reference' 
+    
+    createResponse:
+      type: object
+      required: ['id']
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 'e42aad74-8fbd-4ce3-8bdd-cb9052f0dadc'
+
+    getResponse:
+      allOf:
+        - $ref: '#/components/schemas/reference'
+        
+    error:
+      type: object
+      properties:
+        code:
+          description: Código do erro
+          type: string
+          example: 'BAD_REQUEST'
+        message:
+          description: Mensagem de erro
+          type: string
+          example: 'Invalid request body'
+    
+    internalServerError:
+      type: object
+      properties:
+        code:
+          description: Código do erro
+          type: string
+          example: 'INTERNAL_SERVER_ERROR'
+        message:
+          description: Mensagem de erro
+          type: string
+          example: 'Unexpected error'

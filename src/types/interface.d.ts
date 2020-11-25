@@ -17,6 +17,7 @@ export interface IHttpInterface {
 }
 
 export type HttpControllerConfig = {
+  validator: typeof import('../interface/http/middleware/validator').validator;
   coreContainer: Container;
 };
 
