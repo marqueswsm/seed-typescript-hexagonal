@@ -18,12 +18,15 @@ export class ReferenceRepository implements IReferenceRepository {
     this.mysqlAdapter.tableName = 'references';
   }
   
-  async createReference(params: Reference): Promise<string> {
+  async createReference(params: Reference): Promise<Pick<Reference, 'id'>> {
     const id = Uuid.generate();
 
     const reference = R.assoc('id', id, params);
+
     await this.mysqlAdapter.db.insert(reference);
 
-    return id;
+    return {
+      id,
+    };
   }
 }

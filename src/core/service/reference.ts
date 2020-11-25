@@ -9,7 +9,7 @@ export class ReferenceService implements IReferenceService {
     this.referenceRepository = context.referenceRepository;
   }
 
-  createReference(params: Reference): Promise<string> {
+  createReference(params: Reference): Promise<Pick<Reference, 'id'>> {
     return this.referenceRepository.createReference(params);
   }
 }
