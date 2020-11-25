@@ -1,5 +1,5 @@
-import { UseCaseContext } from "../../types/core";
-import { IReferenceUseCase, Reference } from "../../types/reference";
+import { UseCaseContext } from '../../types/core';
+import { IReferenceUseCase, Reference } from '../../types/reference';
 
 export class ReferenceUseCase implements IReferenceUseCase {
   private referenceService: UseCaseContext['referenceService'];

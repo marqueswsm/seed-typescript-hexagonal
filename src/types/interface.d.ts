@@ -17,6 +17,7 @@ export interface IHttpInterface {
 }
 
 export type HttpControllerConfig = {
+  // eslint-disable-next-line no-undef
   validator: typeof import('../interface/http/middleware/validator').validator;
   coreContainer: Container;
 };

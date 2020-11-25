@@ -1,6 +1,7 @@
 /* eslint-disable max-classes-per-file */
 class CustomError extends Error {
   private code: string;
+
   private details: CustomError[] | null;
 
   constructor(

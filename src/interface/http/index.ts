@@ -10,12 +10,14 @@ import { IHttpInterface, IHttpRoute } from '../../types/interface';
 import { Container } from '../../types/core';
 
 type Config = {
+  // eslint-disable-next-line no-undef
   env: typeof import('../../util/env').env;
   coreContainer: Container;
 };
 
 export default class HttpInterface implements IHttpInterface {
   private env: Config['env'];
+
   private coreContainer: Config['coreContainer'];
 
   private app: express.Application;

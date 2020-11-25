@@ -12,6 +12,7 @@ import { Reference } from '../../../types/reference';
 
 export class ReferenceController implements IHttpRoute {
   private validator: HttpControllerConfig['validator'];
+
   private referenceUseCase: HttpControllerConfig['coreContainer']['referenceUseCase'];
 
   constructor({ coreContainer, validator }: HttpControllerConfig) {
@@ -24,7 +25,7 @@ export class ReferenceController implements IHttpRoute {
       .post(
         this.validator(createReferenceSchema),
         this.createReference.bind(this),
-      )
+      );
   }
 
   async createReference(req: HttpRequest, res: HttpResponse, next: HttpNext) {

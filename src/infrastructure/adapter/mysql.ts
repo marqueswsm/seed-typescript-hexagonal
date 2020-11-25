@@ -7,19 +7,20 @@ import {
 } from '../../types/infrastructure';
 
 export class MysqlAdapter implements IMysqlAdapter {
-  private _tbName: string;
+  private tabName: string;
+
   private database: MysqlDatabase;
 
   constructor(config?: MysqlAdapterConfig) {
     this.database = config?.dbConn || database();
-    this._tbName = '';
+    this.tabName = '';
   }
 
   get db() {
-    return this.database(this._tbName);
+    return this.database(this.tabName);
   }
 
   set tableName(name: string) {
-    this._tbName = name;
+    this.tabName = name;
   }
 }

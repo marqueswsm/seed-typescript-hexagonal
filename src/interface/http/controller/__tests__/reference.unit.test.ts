@@ -28,15 +28,14 @@ describe('Controller reference unit tests', () => {
 
       req.setBody(bodyRequest);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       const controller = new ReferenceController({ coreContainer, validator });
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+
       // @ts-ignore
       await controller.createReference(req, res, next);
 
       expect(coreContainer.referenceUseCase.createReference).toHaveBeenCalledWith(bodyRequest);
-    });    
+    });
 
     it('should call with 201', async () => {
       const req = new Request();
@@ -61,15 +60,14 @@ describe('Controller reference unit tests', () => {
 
       req.setBody(bodyRequest);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       const controller = new ReferenceController({ coreContainer, validator });
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+
       // @ts-ignore
       await controller.createReference(req, res, next);
 
       expect(res.status).toHaveBeenCalledWith(201);
-    });    
+    });
 
     it('should call send with a valid body', async () => {
       const req = new Request();
@@ -96,15 +94,14 @@ describe('Controller reference unit tests', () => {
 
       req.setBody(bodyRequest);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       const controller = new ReferenceController({ coreContainer, validator });
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+
       // @ts-ignore
       await controller.createReference(req, res, next);
 
       expect(res.send).toHaveBeenCalledWith(useCaseResponse);
-    });    
+    });
 
     it('should call next if use case throws', async () => {
       const req = new Request();
@@ -119,10 +116,6 @@ describe('Controller reference unit tests', () => {
         citation: chance.string(),
       };
 
-      const useCaseResponse = {
-        id: chance.guid({ guid: 4 }),
-      };
-
       const coreContainer = {
         referenceUseCase: {
           createReference: jest.fn(() => {
@@ -133,14 +126,13 @@ describe('Controller reference unit tests', () => {
 
       req.setBody(bodyRequest);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       const controller = new ReferenceController({ coreContainer, validator });
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+
       // @ts-ignore
       await controller.createReference(req, res, next);
 
       expect(next).toHaveBeenCalled();
-    });    
+    });
   });
 });

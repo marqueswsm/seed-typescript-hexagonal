@@ -1,14 +1,12 @@
 import httpStatusCodes from 'http-status-codes';
 
-import { HttpRequest, HttpResponse, HttpNext } from '../../../types/interface';
+import { HttpRequest, HttpResponse } from '../../../types/interface';
 import { BadRequestError } from '../../../util/error';
 
 export const errorHandler = (
   err: Error,
   req: HttpRequest,
   res: HttpResponse,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  next: HttpNext,
 ) => {
   let status = httpStatusCodes.INTERNAL_SERVER_ERROR;
 

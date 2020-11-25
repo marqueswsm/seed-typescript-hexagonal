@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 export type Reference = {
   id: string;
   bibtex: string;
@@ -6,7 +8,7 @@ export type Reference = {
 };
 
 export interface IReferenceRepository {
-  createReference(params: Omit<Reference, 'id'>): Promise<Pick<Reference, 'id'>>
+  createReference(params: Omit<Reference, 'id'>): Promise<Pick<Reference, 'id'>>;
 }
 
 export interface IReferenceService {
@@ -16,4 +18,3 @@ export interface IReferenceService {
 export interface IReferenceUseCase {
   createReference(params: Omit<Reference, 'id'>): Promise<Pick<Reference, 'id'>>;
 }
-  

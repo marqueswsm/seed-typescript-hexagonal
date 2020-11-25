@@ -5,11 +5,6 @@ import { IReferenceRepository } from './reference';
 /* MySQL Adapter */
 export type MysqlDatabase = knex;
 
-export interface IMysqlAdapter {
-  db: knex.QueryBuilder;
-  tableName: string;
-}
-
 export type MysqlAdapterConfig = {
   dbConn: MysqlDatabase;
 };

@@ -17,7 +17,7 @@ export class ReferenceRepository implements IReferenceRepository {
     this.mysqlAdapter = context.mysqlAdapter;
     this.mysqlAdapter.tableName = 'references';
   }
-  
+
   async createReference(params: Omit<Reference, 'id'>): Promise<Pick<Reference, 'id'>> {
     const id = Uuid.generate();
 

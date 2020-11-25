@@ -1,5 +1,4 @@
 import { Chance } from 'chance';
-import { object } from 'joi';
 
 import { ReferenceRepository } from '../reference';
 

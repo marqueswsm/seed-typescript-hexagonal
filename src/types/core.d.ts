@@ -13,7 +13,7 @@ export type ServiceContext = {
 export type Container = {
   referenceUseCase: IReferenceUseCase;
 };
-  
+
 export type UseCaseContext = {
   referenceService: IReferenceService;
 };
