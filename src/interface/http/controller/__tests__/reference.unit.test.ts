@@ -85,7 +85,7 @@ describe('Controller reference unit tests', () => {
       };
 
       const useCaseResponse = {
-        id: chance.guid({ guid: 4 }),
+        id: chance.guid({ version: 4 }),
       };
 
       const coreContainer = {
