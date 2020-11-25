@@ -5,6 +5,8 @@ import {
   NextFunction,
 } from 'express';
 
+import { Container } from './core';
+
 export type HttpRouter = Router;
 export type HttpRequest = Request;
 export type HttpResponse = Response;
@@ -14,6 +16,11 @@ export interface IHttpInterface {
   serve(): void;
 }
 
+export type HttpControllerConfig = {
+  coreContainer: Container;
+};
+
 export interface IHttpRoute {
-  register(r: HttpRouter): void;
+  // eslint-disable-next-line no-unused-vars
+  register(router: HttpRouter): void;
 }

@@ -1,21 +1,26 @@
-import express from 'express';
-import helmet from 'helmet';
-import bodyParser from 'body-parser';
+import * as express from 'express';
+import * as helmet from 'helmet';
+import * as bodyParser from 'body-parser';
+
+import { ReferenceController } from './controller/reference';
 
 import { IHttpInterface, IHttpRoute } from '../../types/interface';
-import { ReferenceController } from './controller/reference';
+import { Container } from '../../types/core';
 
 type Config = {
   env: typeof import('../../util/env').env;
+  coreContainer: Container;
 };
 
 export default class HttpInterface implements IHttpInterface {
   private env: Config['env'];
+  private coreContainer: Config['coreContainer'];
 
   private app: express.Application;
 
   constructor(config: Config) {
     this.env = config.env;
+    this.coreContainer = config.coreContainer;
   }
 
   initApp() {
@@ -33,7 +38,9 @@ export default class HttpInterface implements IHttpInterface {
 
   setupRoutes() {
     const controllers = [
-      new ReferenceController(),
+      new ReferenceController({
+        coreContainer: this.coreContainer,
+      }),
     ];
 
     controllers.forEach((route: IHttpRoute) => {
